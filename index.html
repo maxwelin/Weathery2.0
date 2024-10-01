@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weathery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="searchbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+DE+Grund:wght@100..400&family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <div class="img-container">
+                <img src="icon.jpg" alt="Weathery icon">
+            </div>
+        </div>
+
+        <h1>Weathery</h1>
+        
+        <div class="nav-wrapper">
+            <nav>
+                <div class="nav-container">
+                    <p>placeholder</p>
+                </div>
+                <div class="nav-container">
+                    <p>placeholder</p>
+                </div>
+                <div class="nav-container">
+                    <p>placeholder</p>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="location-card">
+
+            <h2 id="location-suburb">Retrieving location..</h2>
+            <h3 id="location-municipality"></h3>
+            <div class= "clock">
+                <span id="hrs">00</span><span id="semiCol">:</span><span id="min">00</span>
+            </div>
+
+            <div id="search-bar">
+                <div id="set-favorite"class="search-bar-btn" onclick="toggleFavorite()">
+                    <i id="click-to-favorite" class="fa-regular fa-star"></i>
+                </div>
+
+                <div id="my-pos" class="search-bar-btn">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                
+                <input type="text" placeholder="search.." id="search-select" class="search-bar-btn" onclick="toggleList()" onkeydown="inputEnter(event)" autocomplete="off">
+
+                <ul id="favorite-list">
+                    <li id="current-location" class="bold" onclick="currentLocation()">My location <i id ="my-location-drop-down" class="fa-solid fa-location-dot drop-down"></i> </li>
+                    <li id="favorite" class="bold">Favorite locations <i id="favorite-drop-down" class="fa-solid fa-star drop-down"></i></li>
+                </ul>
+                
+                <div id="search-btn" class="search-bar-btn down-arrow-btn" onclick="searchLocation()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                
+                <div class="search-bar-btn down-arrow-btn" onclick="toggleList()">
+                    <i class="fa-solid fa-angle-down" id="arrow"></i>
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="card0" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3>Today</h3>
+
+                <p id="date-today"></p>
+
+            </div>
+
+            <div class="icon-container">
+                <p id="icon0" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">current <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="current-temp"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax0"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain0"></p>
+            </div>
+        </div>
+
+        <div id="card1" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3 id="day2"></h3>
+                <p id="date-day2"></p>
+            </div>
+
+            <div class="icon-container">
+                <p id="icon1" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">average <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="avg1"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax1"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain1"></p>
+            </div>
+        </div>
+
+        <div id="card2" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3 id="day3"></h3>
+                <p id="date-day3"></p>
+            </div>
+
+            <div class="icon-container">
+                <p id="icon2" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">average <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="avg2"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax2"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain2"></p>
+            </div>
+        </div>
+
+        <div id="weather-details">
+            <ul>
+                <li>
+                    <span><i class="fa-regular fa-clock"></i></span>
+                    <span><i class="fa-solid fa-cloud"></i></span>
+                    <span><i class="fa-solid fa-temperature-low"></i></span>
+                    <span><i class="fa-solid fa-droplet"></i></span>
+                    <span><i class="fa-solid fa-wind"></i></span>
+                    <span><i class="fa-solid fa-percent"></i></span>
+                </li>
+                <li id="hour0">
+                    <span>00:</span>
+                    <span id="h-icons0">00</span>
+                    <span id="h-temp0">00</span>
+                    <span id="h-precipitation0">00</span>
+                    <span id="h-wind-speed0">00</span>
+                    <span id="h-humidity0">00</span>
+                </li>
+                <li id="hour1">
+                    <span>01:</span>
+                    <span id="h-icons1">00</span>
+                    <span id="h-temp1">00</span>
+                    <span id="h-precipitation1">00</span>
+                    <span id="h-wind-speed1">00</span>
+                    <span id="h-humidity1">00</span>
+                </li>
+                <li id="hour2">
+                    <span>02:</span>
+                    <span id="h-icons2">00</span>
+                    <span id="h-temp2">00</span>
+                    <span id="h-precipitation2">00</span>
+                    <span id="h-wind-speed2">00</span>
+                    <span id="h-humidity2">00</span>
+                </li>
+                <li id="hour3">
+                    <span>03:</span>
+                    <span id="h-icons3">00</span>
+                    <span id="h-temp3">00</span>
+                    <span id="h-precipitation3">00</span>
+                    <span id="h-wind-speed3">00</span>
+                    <span id="h-humidity3">00</span>
+                </li>
+                <li id="hour4">
+                    <span>04:</span>
+                    <span id="h-icons4">00</span>
+                    <span id="h-temp4">00</span>
+                    <span id="h-precipitation4">00</span>
+                    <span id="h-wind-speed4">00</span>
+                    <span id="h-humidity4">00</span>
+                </li>
+                <li id="hour5">
+                    <span>05:</span>
+                    <span id="h-icons5">00</span>
+                    <span id="h-temp5">00</span>
+                    <span id="h-precipitation5">00</span>
+                    <span id="h-wind-speed5">00</span>
+                    <span id="h-humidity5">00</span>
+                </li>
+                <li id="hour6">
+                    <span>06:</span>
+                    <span id="h-icons6">00</span>
+                    <span id="h-temp6">00</span>
+                    <span id="h-precipitation6">00</span>
+                    <span id="h-wind-speed6">00</span>
+                    <span id="h-humidity6">00</span>
+                </li>
+                <li id="hour7">
+                    <span>07:</span>
+                    <span id="h-icons7">00</span>
+                    <span id="h-temp7">00</span>
+                    <span id="h-precipitation7">00</span>
+                    <span id="h-wind-speed7">00</span>
+                    <span id="h-humidity7">00</span>
+                </li>
+                <li id="hour8">
+                    <span>08:</span>
+                    <span id="h-icons8">00</span>
+                    <span id="h-temp8">00</span>
+                    <span id="h-precipitation8">00</span>
+                    <span id="h-wind-speed8">00</span>
+                    <span id="h-humidity8">00</span>
+                </li>
+                <li id="hour9">
+                    <span>09:</span>
+                    <span id="h-icons9">00</span>
+                    <span id="h-temp9">00</span>
+                    <span id="h-precipitation9">00</span>
+                    <span id="h-wind-speed9">00</span>
+                    <span id="h-humidity9">00</span>
+                </li>
+                <li id="hour10">
+                    <span >10:</span>
+                    <span id="h-icons10">00</span>
+                    <span id="h-temp10">00</span>
+                    <span id="h-precipitation10">00</span>
+                    <span id="h-wind-speed10">00</span>
+                    <span id="h-humidity10">00</span>
+                </li>
+                <li id="hour11">
+                    <span >11:</span>
+                    <span id="h-icons11">00</span>
+                    <span id="h-temp11">00</span>
+                    <span id="h-precipitation11">00</span>
+                    <span id="h-wind-speed11">00</span>
+                    <span id="h-humidity11">00</span>
+                </li>
+                <li id="hour12">
+                    <span >12:</span>
+                    <span id="h-icons12">00</span>
+                    <span id="h-temp12">00</span>
+                    <span id="h-precipitation12">00</span>
+                    <span id="h-wind-speed12">00</span>
+                    <span id="h-humidity12">00</span>
+                </li>
+                <li id="hour13">
+                    <span >13:</span>
+                    <span id="h-icons13">00</span>
+                    <span id="h-temp13">00</span>
+                    <span id="h-precipitation13">00</span>
+                    <span id="h-wind-speed13">00</span>
+                    <span id="h-humidity13">00</span>
+                </li>
+                <li id="hour14">
+                    <span >14:</span>
+                    <span id="h-icons14">00</span>
+                    <span id="h-temp14">00</span>
+                    <span id="h-precipitation14">00</span>
+                    <span id="h-wind-speed14">00</span>
+                    <span id="h-humidity14">00</span>
+                </li>
+                <li id="hour15">
+                    <span >15:</span>
+                    <span id="h-icons15">00</span>
+                    <span id="h-temp15">00</span>
+                    <span id="h-precipitation15">00</span>
+                    <span id="h-wind-speed15">00</span>
+                    <span id="h-humidity15">00</span>
+                </li>
+                <li id="hour16">
+                    <span >16:</span>
+                    <span id="h-icons16">00</span>
+                    <span id="h-temp16">00</span>
+                    <span id="h-precipitation16">00</span>
+                    <span id="h-wind-speed16">00</span>
+                    <span id="h-humidity16">00</span>
+                </li>
+                <li id="hour17">
+                    <span >17:</span>
+                    <span id="h-icons17">00</span>
+                    <span id="h-temp17">00</span>
+                    <span id="h-precipitation17">00</span>
+                    <span id="h-wind-speed17">00</span>
+                    <span id="h-humidity17">00</span>
+                </li>
+                <li id="hour18">
+                    <span >18:</span>
+                    <span id="h-icons18">00</span>
+                    <span id="h-temp18">00</span>
+                    <span id="h-precipitation18">00</span>
+                    <span id="h-wind-speed18">00</span>
+                    <span id="h-humidity18">00</span>
+                </li>
+                <li id="hour19">
+                    <span >19:</span>
+                    <span id="h-icons19">00</span>
+                    <span id="h-temp19">00</span>
+                    <span id="h-precipitation19">00</span>
+                    <span id="h-wind-speed19">00</span>
+                    <span id="h-humidity19">00</span>
+                </li>
+                <li id="hour20">
+                    <span >20:</span>
+                    <span id="h-icons20">00</span>
+                    <span id="h-temp20">00</span>
+                    <span id="h-precipitation20">00</span>
+                    <span id="h-wind-speed20">00</span>
+                    <span id="h-humidity20">00</span>
+                </li>
+                <li id="hour21">
+                    <span >21:</span>
+                    <span id="h-icons21">00</span>
+                    <span id="h-temp21">00</span>
+                    <span id="h-precipitation21">00</span>
+                    <span id="h-wind-speed21">00</span>
+                    <span id="h-humidity21">00</span>
+                </li>
+                <li id="hour22">
+                    <span >22:</span>
+                    <span id="h-icons22">00</span>
+                    <span id="h-temp22">00</span>
+                    <span id="h-precipitation22">00</span>
+                    <span id="h-wind-speed22">00</span>
+                    <span id="h-humidity22">00</span>
+                </li>
+                <li id="hour23">
+                    <span >23:</span>
+                    <span id="h-icons23">00</span>
+                    <span id="h-temp23">00</span>
+                    <span id="h-precipitation23">00</span>
+                    <span id="h-wind-speed23">00</span>
+                    <span id="h-humidity23">00</span>
+                </li>
+            </ul>
+        </div>
+
+        <div id="card3" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3 id="day4"></h3>
+                <p id="date-day4"></p>
+            </div>
+
+            <div class="icon-container">
+                <p id="icon3" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">average <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="avg3"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax3"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain3"></p>
+            </div>
+        </div>
+
+        <div id="card4" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3 id="day5"></h3>
+                <p id="date-day5"></p>
+            </div>
+
+            <div class="icon-container">
+                <p id="icon4" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">average <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="avg4"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax4"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain4"></p>
+            </div>
+        </div>
+
+        <div id="card5" class="weather-card" onclick="expandWeatherDetails(event)">
+            <div class="date-container">
+                <h3 id="day6"></h3>
+                <p id="date-day6"></p>
+            </div>
+
+            <div class="icon-container">
+                <p id="icon5" class="icon"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">average <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="avg5"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">min / max <i class="fa-solid fa-temperature-low"></i></p>
+                <p id="minmax5"></p>
+            </div>
+
+            <div class="date-container">
+                <p class="smaller">mm <i class="fa-solid fa-droplet"></i></p>
+                <p id="rain5"></p>
+            </div>
+        </div>
+        
+        <div id="interactive-map">
+            <div id="Map_enoMjpbLMajobTpbjhWTojocoga"></div>
+        </div>
+        
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <a><h4>Placeholder</h4></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+        </div>
+        <div class="footer-container">
+            <a><h4>Placeholder</h4></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+        </div>
+        <div class="footer-container">
+            <a><h4>Placeholder</h4></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+            <a><p>placeholder</p></a>
+        </div>
+    </footer>
+
+<script src="maps.js"></script>
+<script type ="module" src="main.js"></script>
+<script src="https://www.tutiempo.net/s-widget/fm/enoMjpbLMajobTpbjhWTojocoga.js"></script>
+</body>
+</html>
+

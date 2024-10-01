@@ -1,0 +1,150 @@
+#search-bar{
+    position: relative;
+    display: flex;
+    height: 50px;
+    border: 1px solid black;
+    margin-left: auto;
+    border-radius: 2px;
+}
+
+
+#search-bar input{
+    border: none;
+    width: 180px;
+    font-size: 1em;
+    padding-left: 10px;
+}
+
+#search-bar input:focus, input:focus{
+    outline: none;
+}
+
+#search-bar input:hover{
+    background-color: white;
+}
+
+.search-bar-btn{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    width: 50px;
+    font-size: 1.6em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-bar-btn:hover{
+    font-size: 2em;
+    background-color: hsla(207, 100%, 85%, 0.8);
+}
+
+.down-arrow-btn:hover{
+    font-size: 1.6em;
+    background-color: white;
+}
+
+.search-bar-btn:active{
+    font-size: 1.8em;
+    background-color: hsla(207, 100%, 85%, 0.6);
+}
+
+#set-favorite{
+    border-right: 1px solid black;
+}
+
+.favorite-location:hover{
+    background-color: hsla(207, 100%, 85%, 0.8);
+}
+
+.favorite-location:active{
+    background-color: hsla(207, 100%, 85%, 0.6);
+}
+
+.down-arrow-btn:active{
+    font-size: 1.8em;
+    background-color: white;
+}
+
+#select{
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#search-bar ul{
+    position: absolute;
+    background-color: white;
+    top: 90%;
+    right: 0;
+    list-style: none;
+    font-size: 16px;
+    width: 290px;
+    z-index: 1;
+    padding: 0;
+    opacity: 0;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
+    pointer-events: none;
+    transform: translateY(-15px);
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+#search-bar ul.open{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#search-bar li{
+    display: flex;
+    align-items: flex-end;
+    padding: 5px;
+    width: 280px;
+    height: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.location-li:hover{
+    background-color: hsla(207, 100%, 85%, 0.8);
+}
+
+.bold{
+    position: relative;
+    display: flex;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.drop-down{
+    font-size: 1.5em;
+    position: absolute;
+    right: 10px;
+}
+
+#my-location-drop-down{
+    right: 14px;
+}
+
+#current-location{
+    border-bottom: 1px solid black;
+}
+
+.bold:hover{
+    background-color: hsla(207, 100%, 85%, 0.8);
+}
+
+#added-to-favorite{
+    text-align: center;
+    font-weight: bold;
+    cursor: default;
+    height: 20px;
+}
+
+#my-pos{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    display: none;
+}

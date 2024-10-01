@@ -1,0 +1,247 @@
+body{
+    background-image:url("sky2.jpg");
+    font-family: sans-serif;
+}
+
+header{
+    position: relative;
+    display:flex;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    height: 6rem;
+    box-shadow: 1px 1px 5px black;
+}
+
+.nav-wrapper{
+    width: 70rem;
+    margin-right: 15vw;
+}
+
+nav{
+    height: 100%;
+    display:flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.nav-container{
+    flex-basis: 100px;
+    height: 50px;
+    font-size: 1.2em;
+}
+
+h1{
+    font-size: 3.4em;
+    z-index: 1;
+    text-shadow: -2px 3px 1px hsla(207, 98%, 65%, 0.65);
+    width: 300px;
+    margin-right: 50px;
+    font-family: "Varela Round", sans-serif;
+}
+
+h2{
+    font-size: 2.5em;
+}
+
+.img-container{
+    width: 100px;
+    z-index: 0;
+    margin-left: 15vw;
+}
+
+img{
+    width: 100%;
+}
+
+#main{
+    display:grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 150px repeat(6, 130px);
+    gap: 1em;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 70rem;
+    margin:auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px black;
+}
+
+#get-loc{
+    margin-left: auto;
+    margin-right: 20px;
+    height: 50px;
+    width: 130px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#location-card{ 
+    background-color: white;
+    display: flex;
+    position: relative;
+    align-items: center;
+    grid-column: span 10;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+}
+
+#location-suburb{
+    align-self: center;
+}
+
+#location-municipality{
+    position: absolute;
+    font-size: 1.2em;
+    top: 55%;
+}
+
+.clock{
+    margin-left: 50px;
+    margin-top: 12px;
+    font-size: 1em;
+}
+
+.weather-card{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    gap: none;
+    grid-column: span 6;
+    border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.5);
+    user-select: none;
+}
+
+.weather-card.clicked{
+    background-color: hsla(207, 100%, 85%, 0.8);
+}
+
+.weather-card:hover{
+    cursor:pointer;
+    scale: 1.01;
+    box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.weather-card:active{
+    scale: 1.02;
+}
+
+.card-container{
+    display:flex;
+    align-items: center;
+    flex-basis: 130px;
+    height: 100px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.date-container{
+    flex-basis: 130px;
+    height: 100px;
+    font-size: 1em;
+
+    text-align: center;
+}
+
+.icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 100px;
+    font-size: 1em;
+    height: 100px;
+}
+
+span{
+    font-size: 1.4em;
+    user-select: none;
+}
+
+.smaller{
+    font-size: 0.8em;
+    user-select: none;
+}
+
+.icon{
+    font-size: 3em;
+    user-select: none;
+}
+
+#weather-details{
+    position: relative;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.5);
+    background-color: hsla(207, 100%, 85%, 0.8);
+    border-radius: 5px;
+    grid-row-start: 2;
+    grid-row-end: 7;
+    grid-column-start: 7;
+    grid-column-end: 11;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100px);
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+#weather-details ul{
+    list-style: none;
+    font-size: 11px;
+    width: 400px;
+    padding: 15px;
+}
+
+#weather-details li{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;  
+    padding: 2.5px;
+}
+
+#interactive-map{
+    grid-column-start: 7;
+    grid-column-end: 11;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    height: 264px;
+    border: 1px solid black;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+    opacity: 1;
+}
+
+#interactive-map.toggled{
+    grid-column-start: -5;
+    grid-column-end: -1;
+    grid-row-start: 7;
+    grid-row-end: 9;
+}
+
+#weather-details.toggled{
+    transform: translateY(-0px);
+    opacity: 1;
+    pointer-events: default;
+}
+
+#Map_enoMjpbLMajobTpbjhWTojocoga{
+    user-select: none;
+}
+
+footer{
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+    display:flex;
+    justify-content: space-around;
+}
+
+.footer-container{
+    flex-basis: 200px;
+    font-size: 1.2em;
+}
+
+h4{
+    text-decoration: underline;
+}
