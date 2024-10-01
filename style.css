@@ -245,3 +245,8 @@ footer{
 h4{
     text-decoration: underline;
 }
+
+#detail-icons{
+    display:flex;
+    justify-content: space-around;
+}

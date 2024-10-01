@@ -79,7 +79,7 @@ export class RenderService {
             this.hourlyTemp[i].innerText = `${data.hourlyTemp[y].toFixed(1)}°C`;
             this.hourlyPrecipitation[i].innerText = `${data.hourlyPrecipitation[y].toFixed(1)} mm`;
             this.hourlyWindSpeed[i].innerText = `${data.hourlyWindSpeed[y].toFixed(1)} km/h`;
-            this.hourlyHumidity[i].innerText = `${data.hourlyRelativeHumidity[y]}%`;
+            this.hourlyHumidity[i].innerText = `${data.hourlyRelativeHumidity[y]}`;
             this.hourlyIcons[i].innerText = this.getWeatherDescr(data.hourlyWeatherCode[y]);
         }
     }
