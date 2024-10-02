@@ -1,5 +1,5 @@
-import { SearchService } from "../Weathery2.0/searchservice.js"
-import { RenderService } from "../Weathery2.0/renderservice.js"
+import { SearchService } from "./searchservice.js"
+import { RenderService } from "./renderservice.js"
 
 const searchService = new SearchService()
 const renderService = new RenderService()
