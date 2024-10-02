@@ -27,8 +27,7 @@ nav{
 
 .nav-container{
     flex-basis: 100px;
-    height: 50px;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 h1{
@@ -41,7 +40,7 @@ h1{
 }
 
 h2{
-    font-size: 2.5em;
+    font-size: 2em;
 }
 
 .img-container{
@@ -238,8 +237,13 @@ footer{
 }
 
 .footer-container{
-    flex-basis: 200px;
+    display:grid;
+    width: 300px;
     font-size: 1.2em;
+}
+
+.footer-container a{
+    margin-bottom: 10px;
 }
 
 h4{

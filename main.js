@@ -89,7 +89,6 @@ function searchLocation(){
     const value = document.querySelector("#search-select").value
     let alreadyFavorited = false;
 
-    console.log(favoriteList)
 
     if(value){
         document.querySelector("#location-suburb").innerText = "Retrieving location..."
@@ -99,7 +98,6 @@ function searchLocation(){
     
         searchService.getLocationFromString(value)
         .then(data => {
-            console.log(data)
             searchService.updateLocation(data.lat, data.lon)
             renderService.renderGeoData(data)
 
@@ -126,85 +124,116 @@ function searchLocation(){
     }
 }
 
-function createListItem(location) {
+function createListItem(location){
+
     const favoriteDropDownList = document.querySelector("#favorite-list")
     const newListItem = document.createElement('li')
     
     newListItem.className = "location-li"
-    newListItem.id = favoriteList.length
     newListItem.textContent = location
-    
-    console.log(favoriteList)
 
-    //Add a click event listener for the list item
-    newListItem.addEventListener("click", (event) => {
-        console.log("Insert search logic here. Location: " + event.target.id)
-        console.log(favoriteList[event.target.id - 1])
+    //Add event listener for the list item
+    newListItem.addEventListener("click", () => {
+        const normalizedLocation = location.toLowerCase()//noramalized input to avoid bugs
+        const targetFavorite = favoriteList.find(fav => 
+            (fav.suburb && fav.suburb.toLowerCase() === normalizedLocation) || 
+            (fav.town && fav.town.toLowerCase() === normalizedLocation) || 
+            (fav.city && fav.city.toLowerCase() === normalizedLocation)
+        )
 
-        const targetFavorite = favoriteList[event.target.id - 1]
+        if (targetFavorite){
 
-        searchService.updateLocation(targetFavorite.lat, targetFavorite.lon, targetFavorite.suburb || targetFavorite.town || targetFavorite.municipality)
-        
-        searchService.fetchWeatherData()
-        .then(data => {
-            renderService.renderWeatherData(data)
-            renderService.renderWeatherDetails(data)
-        })
-        searchService.coordsToLocation(targetFavorite.lat, targetFavorite.lon)
-        .then(data => {
-            renderService.renderGeoData(data)
-        })
-        
+            searchService.updateLocation(targetFavorite.lat, targetFavorite.lon, targetFavorite.suburb || targetFavorite.town || targetFavorite.municipality);
+            
+            searchService.fetchWeatherData()
+            .then(data => {
+                renderService.renderWeatherData(data)
+                renderService.renderWeatherDetails(data)
+            })
 
-        addedStarIcon()
+            searchService.coordsToLocation(targetFavorite.lat, targetFavorite.lon)
+            .then(data => {
+                renderService.renderGeoData(data)
+            })
 
+            addedStarIcon()
+        }else{
+            console.log("Favorite location not found for:", location)
+        }
     })
 
-    favoriteDropDownList.appendChild(newListItem) //Append the new list item to the favorite list
+    favoriteDropDownList.appendChild(newListItem)//Append the new list item to the favorite list
 }
 
 function removeListItem(data){
 
     const favoriteListItems = document.querySelectorAll(".location-li")
 
-    const listItemToRemove = Array.from(favoriteListItems).find(item => item.innerText === data);
+    const listItemToRemove = Array.from(favoriteListItems).find(item => 
+        item.innerText === data.suburb ||
+        item.innerText === data.town ||
+        item.innerText === data.city
+    )
 
-    listItemToRemove.remove()
+    if (listItemToRemove){
+        listItemToRemove.remove()
+    }else{
+        console.log("No matching item found to remove")
+    }
+
+    //Loop through localStorage to retrieve and remove matching data
+    for(let i = localStorage.length - 1; i >= 0; i--){ //Loop backwards to avoid index issues while removing
+        const key = localStorage.key(i)
+        const value = localStorage.getItem(key)
+
+        try{
+            const parsedValue = JSON.parse(value)
+            
+            // Check if the parsed value matches any of the data properties
+            const matches = (
+                (parsedValue.suburb && parsedValue.suburb === data.suburb) ||
+                (parsedValue.town && parsedValue.town === data.town) ||
+                (parsedValue.city && parsedValue.city === data.city)
+            )
+
+            if(matches){
+                localStorage.removeItem(key)
+            }
+        }catch(error){
+            console.error(error)
+        }
+    }
 }
 
 function toggleFavorite(){
 
-    let alreadyFavorited = false;
-
     searchService.coordsToLocation(searchService.lat, searchService.lon)
     .then(data => {
-        console.log(data)
-        if(favoriteList.length === 0){
+        const favoriteItem = {
+            lat: data.lat,
+            lon: data.lon,
+            suburb: data.suburb || data.town || data.city // Ensure you choose the right property
+        }
 
-            favoriteList.push(data)
-            createListItem(data.suburb || data.town || data.city)
-            addedStarIcon()
+        // Check if the item already exists
+        const index = favoriteList.findIndex(fav => 
+            fav.lat === favoriteItem.lat && fav.lon === favoriteItem.lon
+        )
+
+        if(index > -1){
+            //If already favorited remove it
+            favoriteList.splice(index, 1)
+            localStorage.removeItem(JSON.stringify(favoriteItem))
+            removeListItem(favoriteItem)
+            removedStarIcon()
         }else{
-            for(let i = 0; i < favoriteList.length; i++){
-
-                if(favoriteList[i].lat === data.lat && favoriteList[i].lon === data.lon){
-                console.log(`already favorited at index: ${i}`)
-                favoriteList.splice(i, 1)
-                alreadyFavorited = true;
-                removeListItem(data.suburb || data.town || data.city)
-                removedStarIcon()
-                break
-                }
-            }
-            if(!alreadyFavorited){
-
-                favoriteList.push(data)
-                createListItem(data.suburb)
-                addedStarIcon()
-            }
-        }   
-    console.log(favoriteList)
-    })
+            //If not favorited add it
+            favoriteList.push(favoriteItem)
+            localStorage.setItem(JSON.stringify(favoriteItem.suburb || favoriteItem.town || favoriteItem.city), JSON.stringify(favoriteItem))//Store in local storage
+            createListItem(favoriteItem.suburb || favoriteItem.town || favoriteItem.city)//Create the list item
+            addedStarIcon()
+        }
+    });
 }
 
 function expandWeatherDetails(event) {
@@ -244,6 +273,31 @@ function getDailyDetails(clickedCard){
         })
 }
 
+function getLocalStorageData(){
+
+    if(localStorage.length > 0){
+        addedStarIcon()
+    }
+    
+    // Loop through localStorage and create list items
+    for (let i = 0; i < localStorage.length; i++){
+
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key)
+        try{
+            const parsedValue = JSON.parse(value)
+            if (parsedValue){
+                favoriteList.push(parsedValue)//Push to favoriteList
+
+                const location = parsedValue.suburb || parsedValue.town || parsedValue.city
+                createListItem(location)
+            }
+        }catch(error) {
+            console.error("Error parsing data from localStorage:", error)
+        }
+    }
+}
+
 function main(){
 
     //Live clock
@@ -259,8 +313,10 @@ function main(){
     document.getElementById("semiCol").style.visibility = (document.getElementById("semiCol").style.visibility == 'hidden' ? '' : 'hidden');
 
     },1000)
+
+    getLocalStorageData()
      
-    searchService.updateLocation(59.3486507, 18.1456932, "larsberg")
+    searchService.updateLocation(59.401352, 17.934977, "kista")
     
     searchService.getLocationFromString()
         .then(data => {
@@ -289,3 +345,4 @@ window.toggleFavorite = toggleFavorite;
 window.expandWeatherDetails = expandWeatherDetails;
 window.createListItem = createListItem;
 window.removeListItem = removeListItem;
+window.getLocalStorageData = getLocalStorageData;

@@ -86,8 +86,11 @@ export class RenderService {
     
 
     renderGeoData(data){
-
-        this.suburb.innerText = data.suburb || data.town || data.city || "Could not recieve data"
+        if(data.suburb && data.town){
+            this.suburb.innerText = `${data.suburb}, ${data.town}`
+        }else{
+            this.suburb.innerText = data.suburb || data.town || data.city || "Could not recieve data"
+        }
         this.municipality.innerText = data.district || data.municipality || data.country || ""
     }
 

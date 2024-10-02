@@ -82,9 +82,11 @@ export class SearchService {
                 data.lat,
                 data.lon,
                 data.address.municipality,
-                data.address.town, 
+                data.address.town,
                 data.address.suburb,
-                data.address.country
+                data.address.country,
+                data.address.city_district,
+                data.address.city
             )
         })
         .catch(error => {
