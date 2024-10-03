@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weathery</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="searchbar.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/searchbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
     <header>
         <div>
             <div class="img-container">
-                <img src="icon.jpg" alt="Weathery icon">
+                <img src="../images/icon.jpg" alt="Weathery icon">
             </div>
         </div>
 
@@ -55,7 +55,7 @@
                     <i class="fa-solid fa-location-dot"></i>
                 </div>
                 
-                <input type="text" placeholder="search.." id="search-select" class="search-bar-btn" onclick="toggleList()" onkeydown="inputEnter(event)" autocomplete="off">
+                <input type="text" placeholder="search.." id="search-select" class="search-bar-btn" autocomplete="off">
 
                 <ul id="favorite-list">
                     <li id="current-location" class="bold" onclick="currentLocation()">My location <i id ="my-location-drop-down" class="fa-solid fa-location-dot drop-down"></i> </li>
@@ -66,7 +66,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 
-                <div class="search-bar-btn down-arrow-btn" onclick="toggleList()">
+                <div class="search-bar-btn down-arrow-btn">
                     <i class="fa-solid fa-angle-down" id="arrow"></i>
                 </div>
                 
@@ -463,8 +463,9 @@
         </div>
     </footer>
 
-<script src="maps.js"></script>
-<script type ="module" src="main.js"></script>
+<script src="../scripts/maps.js"></script>
+<script type ="module" src="../scripts/domservice.js"></script>
+<script type ="module" src="../scripts/main.js"></script>
 <script src="https://www.tutiempo.net/s-widget/fm/enoMjpbLMajobTpbjhWTojocoga.js"></script>
 </body>
 </html>

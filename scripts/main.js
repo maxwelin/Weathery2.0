@@ -1,41 +1,12 @@
 import { SearchService } from "./searchservice.js"
 import { RenderService } from "./renderservice.js"
+import { DomService } from "./domservice.js"
 
 const searchService = new SearchService()
 const renderService = new RenderService()
+const domService = new DomService()
 
-let lastClickedCard = null;
 const favoriteList = []
-
-function toggleList(){
-    
-    const icon = document.querySelector("#arrow")
-
-    document.querySelector("#favorite-list").classList.toggle("open")
-    
-    setTimeout(() => {
-        icon.classList.toggle("fa-angle-down");
-        icon.classList.toggle("fa-angle-up");
-    }, 100);
-}
-
-function addedStarIcon(){
-    const icon = document.querySelector("#click-to-favorite")
-
-    if(!icon.classList.contains("fa-solid")){
-        icon.classList.remove("fa-regular");
-        icon.classList.add("fa-solid");
-    }
-}
-
-function removedStarIcon(){
-    const icon = document.querySelector("#click-to-favorite")
-
-    if(!icon.classList.contains("fa-regular")){
-        icon.classList.add("fa-regular");
-        icon.classList.remove("fa-solid");
-    }
-}
 
 function currentLocation(){
 
@@ -62,26 +33,16 @@ function currentLocation(){
                 for(let i = 0; i < favoriteList.length; i++){
 
                     if(favoriteList[i].lat === data.lat && favoriteList[i].lon === data.lon){
-                        addedStarIcon()
+                        domService.addedStarIcon()
                         alreadyFavorited = true;
                         break
                     }
                 }
                 if(!alreadyFavorited){
-                    removedStarIcon()
+                    domService.removedStarIcon()
                 }
             })
         })
-}
-
-function inputEnter(event){
-
-    const searchBtn = document.querySelector("#search-btn")
-
-    //Pressing Enter in the input field activates the search button
-    if(event.key === "Enter"){
-        searchBtn.click();
-    }
 }
 
 function searchLocation(){
@@ -105,13 +66,13 @@ function searchLocation(){
             for(let i = 0; i < favoriteList.length; i++){
 
                 if(favoriteList[i].lat === data.lat && favoriteList[i].lon === data.lon){
-                    addedStarIcon()
+                    domService.addedStarIcon()
                     alreadyFavorited = true;
                     break
                 }
             }
             if(!alreadyFavorited){
-                removedStarIcon()
+                domService.removedStarIcon()
             }
         })
         .then(() => {
@@ -156,7 +117,7 @@ function createListItem(location){
                 renderService.renderGeoData(data)
             })
 
-            addedStarIcon()
+            domService.addedStarIcon()
         }else{
             console.log("Favorite location not found for:", location)
         }
@@ -225,58 +186,26 @@ function toggleFavorite(){
             favoriteList.splice(index, 1)
             localStorage.removeItem(JSON.stringify(favoriteItem))
             removeListItem(favoriteItem)
-            removedStarIcon()
+            domService.removedStarIcon()
         }else{
             //If not favorited add it
             favoriteList.push(favoriteItem)
             localStorage.setItem(JSON.stringify(favoriteItem.suburb || favoriteItem.town || favoriteItem.city), JSON.stringify(favoriteItem))//Store in local storage
             createListItem(favoriteItem.suburb || favoriteItem.town || favoriteItem.city)//Create the list item
-            addedStarIcon()
+            domService.addedStarIcon()
         }
     });
 }
 
-function expandWeatherDetails(event) {
+function expandWeatherDetails(event){
     
-    const clickedCard = event.currentTarget;
-    const weatherDetails = document.querySelector("#weather-details")
-    const interactiveMap = document.querySelector("#interactive-map")
-    
-    //Toggle weather details and interactive map if first click or clicking on the same card
-    if (!lastClickedCard){
-        weatherDetails.classList.toggle("toggled")
-        interactiveMap.classList.toggle("toggled")
-
-    }else if(lastClickedCard === clickedCard){
-        weatherDetails.classList.remove("toggled")
-        setTimeout(() => {
-            interactiveMap.classList.remove("toggled")
-        }, 150)
-        lastClickedCard.classList.remove("clicked")
-        lastClickedCard = null
-        return
-
-    }else{
-        //If a different card is clicked, close the last one
-        lastClickedCard.classList.remove("clicked")
-    }
-    
-    clickedCard.classList.toggle("clicked")
-    lastClickedCard = clickedCard
-    getDailyDetails(clickedCard)
-}
-
-function getDailyDetails(clickedCard){
-    searchService.fetchWeatherData()
-        .then(data => {
-            renderService.renderWeatherDetails(data, clickedCard.id)
-        })
+    domService.expandWeatherDetails(event, searchService.lat, searchService.lon)
 }
 
 function getLocalStorageData(){
 
     if(localStorage.length > 0){
-        addedStarIcon()
+        domService.addedStarIcon()
     }
     
     // Loop through localStorage and create list items
@@ -335,11 +264,7 @@ function main(){
 window.document.onload = main()
 
 //To enable global scoping on functions (because script file is type="module")
-window.toggleList = toggleList;
-window.removedStarIcon = removedStarIcon;
-window.addedStarIcon = addedStarIcon;
 window.currentLocation = currentLocation;
-window.inputEnter = inputEnter;
 window.searchLocation = searchLocation;
 window.toggleFavorite = toggleFavorite;
 window.expandWeatherDetails = expandWeatherDetails;
