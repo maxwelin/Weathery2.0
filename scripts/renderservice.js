@@ -73,7 +73,7 @@ export class RenderService {
             offset = cardIndex * 24
         }
     
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 24; i++){
             let y = i + offset//Use the offset for hourly data
     
             this.hourlyTemp[i].innerText = `${data.hourlyTemp[y].toFixed(1)}°C`;
