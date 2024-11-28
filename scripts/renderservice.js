@@ -120,7 +120,7 @@ export class RenderService {
             //if nextDay exceeds the days in the current month, go to to the next month
             if (nextDay > daysThisMonth) {
                 nextDay -= daysThisMonth
-                this.dateDay[i].innerText = `${nextDay} ${monthsMap[(month + 1) % 12]}` //next month
+                this.dateDay[i].innerText = `${nextDay} ${monthsMap[(month % 12) + 1]}` //next month
             } else {
                 this.dateDay[i].innerText = `${nextDay} ${monthsMap[month]}`
             }
